@@ -50,3 +50,28 @@ async fn add_note(note: web::Json<Note>, data: web::Data<AppState>) -> impl Resp
     HttpResponse::Created().finish()
 }
 
+// Main entry point — async context managed by Actix runtime.
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    // Initialize app state with an empty note list.
+    let app_state = web::Data::new(AppState {
+        notes: Mutex::new(vec![]),
+    });
+
+    println!("🚀 Server running at http://127.0.0.1:8080");
+
+    // Start the HTTP server.
+    // - Moves `app_state` into each worker thread via `.clone()`.
+    // - Defines routes for GET and POST endpoints.
+    HttpServer::new(move || {
+        App::new()
+            .app_data(app_state.clone())
+            .route("/notes", web::get().to(get_notes))
+            .route("/notes", web::post().to(add_note))
+    })
+    // Bind server to localhost:8080
+    .bind(("127.0.0.1", 8080))?
+    // Run the server until interrupted
+    .run()
+    .await
+}
