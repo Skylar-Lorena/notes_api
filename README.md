@@ -53,11 +53,13 @@ Retrieve all notes.
 ```
 
 ## Common Issues
+
 | Error | Solution |
-|-------|---------|
+|-------|----------|
 | `Address already in use` | Stop previous instance or use another port |
 | `serde not found` | Add serde to Cargo.toml with derive feature |
 | `thread '<main>' panicked at 'unwrap'` | Replace with `expect()` or proper error handling |
+| `error: linker 'cc' not found` | Install a C compiler (e.g., `gcc`) and ensure it's in your system PATH |
 
 ## References
 - [Rust Docs](https://doc.rust-lang.org/)
