@@ -54,6 +54,7 @@ See `docs/ai-prompt-journal.md` for full prompts, response summaries, and reflec
 | Borrow checker errors | Moving values unexpectedly | Clone or borrow immutably (`&T`), rethink lifetimes |
 | Panics from `unwrap()` | Unhandled errors | Use `?`, `map_err`, or `expect()` with context |
 | Serde derive missing | Cargo.toml feature not set | `serde = { version="1.0", features=["derive"] }` |
+| Linker 'cc' not found | Missing C compiler on system | Install C compiler (gcc) and ensure it's in PATH |
 
 ## 8) References
 - Rust Book, Actix Web docs, Serde, Tokio (links in README)
