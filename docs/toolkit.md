@@ -21,8 +21,8 @@
 curl https://sh.rustup.rs -sSf | sh
 rustc --version && cargo --version
 
-cargo new note_api
-cd note_api
+cargo new notes_api
+cd notes_api
 # Replace Cargo.toml and src/main.rs with repo versions
 cargo run
 # Open http://127.0.0.1:8080
