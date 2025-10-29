@@ -30,3 +30,23 @@ struct AppState {
     notes: Mutex<Vec<Note>>,
 }
 
+// Handler for GET /notes
+// - `web::Data<AppState>` gives shared access to app state.
+// - Locks the mutex to read the notes safely.
+// - Returns JSON response containing all notes.
+async fn get_notes(data: web::Data<AppState>) -> impl Responder {
+    let notes = data.notes.lock().unwrap(); // acquire lock
+    HttpResponse::Ok().json(&*notes)        // return JSON array of notes
+}
+
+// Handler for POST /notes
+// - Accepts a JSON payload representing a new note.
+// - Locks the mutex to modify shared notes vector.
+// - Pushes the new note into the vector.
+// - Returns HTTP 201 Created status.
+async fn add_note(note: web::Json<Note>, data: web::Data<AppState>) -> impl Responder {
+    let mut notes = data.notes.lock().unwrap();
+    notes.push(note.into_inner());
+    HttpResponse::Created().finish()
+}
+
